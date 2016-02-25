@@ -1,24 +1,22 @@
 {
-  "api": {
-    "host": "http://google.com"
-  },
-  "root_folder": "path/to/source",
-  "map": [
+  "host": "http://anotherdomain.test.com",
+  "root_folder": "path/to/src",
+  "bind": [
     {
-      "path": "/index",
-      "uri": "/index.html"
+      "uri": "/index",
+      "path": "/index.html"
     },
     {
-      "path": "/resources/javascripts/",
-      "uri": "/resources/javascripts/"
+      "uri": "/resources/javascripts/",
+      "path": "/resources/javascripts/"
     },
     {
-      "path": "/resources/stylesheets/",
-      "uri": "/resources/stylesheets/"
+      "uri": "/resources/stylesheets/",
+      "path": "/resources/stylesheets/"
     },
     {
-      "path": "/resources/images/",
-      "uri": "/resources/images/"
+      "uri": "/resources/images/",
+      "path": "/resources/images/"
     }
   ]
 }
