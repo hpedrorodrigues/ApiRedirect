@@ -1,48 +1,67 @@
 {
-  "default": "API_ALIAS",
-  "API_ALIAS": {
+  "default": "google",
+  "google": {
     "api": {
       "host": "https://google.com",
       "port": 4000
     },
-    "root_folder": "/path/project",
+    "root_folder": "/path/to/project",
     "bind": [
       {
-        "path": "/index",
-        "uri": "/index.html"
+        "uri": "/index",
+        "path": "/index.html"
       },
       {
-        "path": "/resources/javascripts/",
-        "uri": "/resources/javascripts/"
+        "uri": "/resources/javascripts/",
+        "path": "/resources/javascripts/"
       },
       {
-        "path": "/resources/stylesheets/",
-        "uri": "/resources/stylesheets/"
+        "uri": "/resources/stylesheets/",
+        "path": "/resources/stylesheets/"
       },
       {
-        "path": "/resources/images/",
-        "uri": "/resources/images/"
+        "uri": "/resources/images/",
+        "path": "/resources/images/"
       },
       {
-        "path": "/resources/fonts/",
-        "uri": "/resources/fonts/"
+        "uri": "/resources/fonts/",
+        "path": "/resources/fonts/"
+      }
+    ],
+    "override_responses": [
+      {
+        "uri": "/login",
+        "field": "target_url",
+        "value": "http://localhost:3000"
       }
     ]
   },
-  "API_ALIAS_2": {
+  "facebook": {
     "api": {
       "host": "https://facebook.com",
       "port": 3000
     },
-    "root_folder": "/path/project",
+    "root_folder": "/path/to/project",
     "bind": [
       {
-        "path": "/index",
-        "uri": "/index.html"
+        "uri": "/index",
+        "path": "/index.html"
       },
       {
-        "path": "/resources/stylesheets/",
-        "uri": "/resources/stylesheets/"
+        "uri": "/resources/stylesheets/",
+        "path": "/resources/stylesheets/"
+      }
+    ],
+    "override_responses": [
+      {
+        "uri": "/test",
+        "field": "target.test",
+        "value": 4
+      },
+      {
+        "uri": "/test2",
+        "field": "target.test2",
+        "value": "simple_value"
       }
     ]
   }
