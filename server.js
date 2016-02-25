@@ -5,27 +5,29 @@ var express = require('express');
 var request = require('request');
 var app = express();
 
-var apiHost = process.argv[2] || properties.api.host;
+var _properties = properties[properties.default];
+
+var apiHost = process.argv[2] || _properties.api.host;
 
 app.use(express.static('files'));
 
-properties.map.forEach(function (mapObject) {
-
+_properties.map.forEach(function (mapObject) {
     if (mapObject && mapObject.path && mapObject.uri) {
-        app.use(mapObject.path, express.static(properties.root_folder + mapObject.uri));
+        app.use(mapObject.path, express.static(_properties.root_folder + mapObject.uri));
     } else {
         console.log('Invalid value to map object: ', mapObject);
     }
 });
 
 app.use('/', function (req, response) {
+    var _request = request(apiHost + req.url);
     req
-        .pipe(request(apiHost + req.url))
+        .pipe(_request)
         .pipe(response);
 });
 
-app.listen(3000);
+app.listen(_properties.api.port);
 
-console.log('Server started listen 3000');
-console.log('Api Host: ', apiHost);
-console.log('Root folder: ', properties.root_folder);
+console.info('Server started listen ', _properties.api.port);
+console.info('Api Host: ', apiHost);
+console.info('Root folder: ', _properties.root_folder);
