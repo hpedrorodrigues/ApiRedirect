@@ -6,7 +6,7 @@
       "port": 4000
     },
     "root_folder": "/path/project",
-    "map": [
+    "bind": [
       {
         "path": "/index",
         "uri": "/index.html"

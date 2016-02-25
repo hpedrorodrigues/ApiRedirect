@@ -11,9 +11,10 @@ var apiHost = process.argv[2] || _properties.api.host;
 
 app.use(express.static('files'));
 
-_properties.map.forEach(function (mapObject) {
-    if (mapObject && mapObject.path && mapObject.uri) {
-        app.use(mapObject.path, express.static(_properties.root_folder + mapObject.uri));
+_properties.bind.forEach(function (mapObject) {
+
+    if (mapObject && mapObject.uri && mapObject.path) {
+        app.use(mapObject.uri, express.static(_properties.root_folder + mapObject.path));
     } else {
         console.log('Invalid value to map object: ', mapObject);
     }

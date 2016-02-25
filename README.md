@@ -2,6 +2,8 @@
 
 A simple api redirect :)
 
+A improvement from [NodeApiRedirect](https://github.com/mozartdiniz/NodeAPIRedirect).
+
 ## How to use
 
 Just read `properties.json`.
