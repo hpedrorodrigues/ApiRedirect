@@ -6,11 +6,15 @@ A improvement from [NodeApiRedirect](https://github.com/mozartdiniz/NodeAPIRedir
 
 ## How to use
 
-Just read `properties.json`.
+Just read `properties.sample.json` and understand.
 
 ## How to run
 
-You can pass host address as a parameter also.
+```bash
+node server.js
+```
+
+You can pass host address as a parameter also:
 
 ```bash
 node server.js http://anotherdomain.test.com

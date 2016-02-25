@@ -1,5 +1,5 @@
 {
-  "default": "DEFAULT_ALIAS",
+  "default": "API_ALIAS",
   "API_ALIAS": {
     "api": {
       "host": "https://google.com",
@@ -26,6 +26,23 @@
       {
         "path": "/resources/fonts/",
         "uri": "/resources/fonts/"
+      }
+    ]
+  },
+  "API_ALIAS_2": {
+    "api": {
+      "host": "https://facebook.com",
+      "port": 3000
+    },
+    "root_folder": "/path/project",
+    "bind": [
+      {
+        "path": "/index",
+        "uri": "/index.html"
+      },
+      {
+        "path": "/resources/stylesheets/",
+        "uri": "/resources/stylesheets/"
       }
     ]
   }

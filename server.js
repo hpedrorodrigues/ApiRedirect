@@ -11,12 +11,12 @@ var apiHost = process.argv[2] || _properties.api.host;
 
 app.use(express.static('files'));
 
-_properties.bind.forEach(function (mapObject) {
+_properties.bind.forEach(function (bindObject) {
 
-    if (mapObject && mapObject.uri && mapObject.path) {
-        app.use(mapObject.uri, express.static(_properties.root_folder + mapObject.path));
+    if (bindObject && bindObject.uri && bindObject.path) {
+        app.use(bindObject.uri, express.static(_properties.root_folder + bindObject.path));
     } else {
-        console.log('Invalid value to map object: ', mapObject);
+        console.log('Invalid value to bind object: ', bindObject);
     }
 });
 
@@ -29,6 +29,6 @@ app.use('/', function (req, response) {
 
 app.listen(_properties.api.port);
 
-console.info('Server started listen ', _properties.api.port);
+console.info('Server started listen: ', _properties.api.port);
 console.info('Api Host: ', apiHost);
 console.info('Root folder: ', _properties.root_folder);
