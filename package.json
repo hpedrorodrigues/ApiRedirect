@@ -1,0 +1,16 @@
+{
+  "name": "APIRedirect",
+  "version": "0.0.1",
+  "description": "A simple api redirect",
+  "homepage": "https://github.com/hpedrorodrigues/ApiRedirect",
+  "author": "Pedro Rodrigues <hs.pedro.rodrigues@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:hpedrorodrigues/ApiRedirect.git"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "request": "^2.69.0"
+  }
+}
