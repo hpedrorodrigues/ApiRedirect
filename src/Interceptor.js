@@ -120,18 +120,18 @@ function Interceptor(app, express, configuration) {
                 if (configuration.printRequestUrl()) {
                     _interceptorLogger.info('\n', '------------------------------------');
 
-                    var statusCode = response.statusCode;
+                    var statusCode = response.statusCode
+                        , requestEndTime = (new Date() - requestStartTime) + 'ms'
+                        , header = '(' + response.statusCode + ') ' + requestEndTime;
+
 
                     if (statusCode < 400) {
-                        _interceptorLogger.success('(', response.statusCode, ')');
+                        _interceptorLogger.success(header);
                     } else {
-                        _interceptorLogger.error('(', response.statusCode, ')');
+                        _interceptorLogger.error(header);
                     }
 
-                    _interceptorLogger.log('Time:', new Date() - requestStartTime, 'ms');
-
-                    _interceptorLogger.log('Request');
-                    _interceptorLogger.info(url);
+                    _interceptorLogger.info("URL: " + url);
                 }
 
                 if (configuration.printRequestError() && error) {
