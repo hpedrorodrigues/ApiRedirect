@@ -140,7 +140,7 @@ function Interceptor(app, express, configuration) {
 
                 if (configuration.printResponse() && body) {
                     _interceptorLogger.log('Response');
-                    _interceptorLogger.info(body);
+                    _interceptorLogger.info(JSON.stringify(JSON.parse(body), null, 4));
                 }
             });
 
