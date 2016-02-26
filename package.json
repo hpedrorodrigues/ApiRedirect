@@ -9,7 +9,11 @@
     "type": "git",
     "url": "git@github.com:hpedrorodrigues/ApiRedirect.git"
   },
+  "scripts": {
+    "start": "npm install && node main.js"
+  },
   "dependencies": {
+    "colors": "^1.1.2",
     "express": "^4.13.4",
     "request": "^2.69.0"
   }

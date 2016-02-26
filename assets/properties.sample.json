@@ -30,13 +30,20 @@
     "headers": {
       "Authorization": "Basic dsOhIHNlIGZ1ZGVyIHNldSBvdMOhcmlvIHBhdSBubyBjw7o="
     },
-    "override_responses": [
-      {
-        "uri": "/login",
-        "field": "target_url",
-        "value": "http://localhost:3000"
-      }
-    ]
+    "override_responses": {
+      "/login": [
+        {
+          "field": "targetUrl",
+          "value": "http://localhost:3000/index"
+        }
+      ]
+    }
+  },
+  "log": {
+    "colors": true,
+    "print_response": false,
+    "print_request_url": true,
+    "print_request_error": false
   },
   "facebook": {
     "host": "https://facebook.com",
@@ -50,18 +57,6 @@
       {
         "uri": "/resources/",
         "path": "/resources/"
-      }
-    ],
-    "override_responses": [
-      {
-        "uri": "/test",
-        "field": "target.test",
-        "value": 4
-      },
-      {
-        "uri": "/test2",
-        "field": "target.test2",
-        "value": "simple_value"
       }
     ]
   }

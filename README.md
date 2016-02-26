@@ -6,7 +6,8 @@ A improvement from [NodeApiRedirect](https://github.com/mozartdiniz/NodeAPIRedir
 
 ## How to use
 
-Just read `properties.sample.json` and understand.
+Just read `assets/properties.sample.json`, understand and create your
+own `assets/properties.json`.
 
 If you using for client side development, needed a url to your
 `index.html` file, because all requests at root path are redirected to
@@ -15,11 +16,11 @@ your api.
 ## How to run
 
 ```bash
-node server.js
+npm start
 ```
 
 You can pass host address as a parameter also:
 
 ```bash
-node server.js http://anotherdomain.test.com
+npm start http://anotherdomain.test.com
 ```
