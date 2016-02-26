@@ -8,18 +8,19 @@ var properties = require('./properties.json')
     , host = process.argv[2] || _properties.host
     , port = _properties.port
     , headers = _properties.headers
-    , overrideResponses = _properties.override_responses;
-
-app.use(express.static('files'));
+    , overrideResponses = _properties.override_responses
+    , timeout = _properties.timeout || 30000
+    , rootFolder = _properties.root_folder
+    , baseRequest = headers ? request.defaults({headers: headers, jar: true}) : request;
 
 _properties.bind.forEach(function (bindObject) {
 
     if (bindObject && bindObject.uri && bindObject.path) {
 
-        app.use(bindObject.uri, express.static(_properties.root_folder + bindObject.path));
+        app.use(bindObject.uri, express.static(rootFolder + bindObject.path));
     } else {
 
-        console.log('Invalid value to bind object: ', bindObject);
+        console.warn('Invalid value to bind object: ', bindObject);
     }
 });
 
@@ -31,14 +32,13 @@ if (overrideResponses && overrideResponses.length) {
 
             app.use(overrideResponse.uri, function (req, res) {
 
-                var url = host + overrideResponse.uri;
+                var url = host + overrideResponse.uri
+                    , field = overrideResponse.field
+                    , value = overrideResponse.value;
 
-                req.pipe(request(url, function (err, response, body) {
+                var _request = baseRequest(url, function (err, response, body) {
 
                     body = JSON.parse(body);
-
-                    var field = overrideResponse.field;
-                    var value = overrideResponse.value;
 
                     if (field.indexOf('.') > -1) {
 
@@ -63,25 +63,31 @@ if (overrideResponses && overrideResponses.length) {
                     res.json(body);
 
                     return body;
-                }));
+                });
+
+                req.pipe(_request);
             });
         } else {
 
-            console.log('Invalid value to override object: ', overrideResponse);
+            console.warn('Invalid value to override object: ', overrideResponse);
         }
     });
 }
 
 app.use('/', function (req, response) {
 
-    if (headers) {
-        for (var headerName in headers) {
-            req.headers[headerName] = headers[headerName];
+    var url = host + req.url;
+
+    console.info('\n', url);
+
+    var _request = baseRequest(url, {timeout: timeout}, function (err) {
+        if (err) {
+            console.error(err);
         }
-    }
+    });
 
     req
-        .pipe(request(host + req.url))
+        .pipe(_request)
         .pipe(response);
 });
 
@@ -90,4 +96,4 @@ app.listen(port);
 console.info('\n', '-----------------------------------------------');
 console.info('Server started listen:', port);
 console.info('Api Host:', host);
-console.info('Root folder:', _properties.root_folder);
+console.info('Root folder:', rootFolder);

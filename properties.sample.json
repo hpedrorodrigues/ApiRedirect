@@ -1,10 +1,9 @@
 {
   "default": "google",
   "google": {
-    "api": {
-      "host": "https://google.com",
-      "port": 4000
-    },
+    "host": "https://google.com",
+    "port": 4000,
+    "timeout": 15000,
     "root_folder": "/path/to/project",
     "bind": [
       {
@@ -40,10 +39,8 @@
     ]
   },
   "facebook": {
-    "api": {
-      "host": "https://facebook.com",
-      "port": 3000
-    },
+    "host": "https://facebook.com",
+    "port": 3000,
     "root_folder": "/path/to/project",
     "bind": [
       {
@@ -51,8 +48,8 @@
         "path": "/index.html"
       },
       {
-        "uri": "/resources/stylesheets/",
-        "path": "/resources/stylesheets/"
+        "uri": "/resources/",
+        "path": "/resources/"
       }
     ],
     "override_responses": [
