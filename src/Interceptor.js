@@ -131,7 +131,7 @@ function Interceptor(app, express, configuration) {
                         _interceptorLogger.error(header);
                     }
 
-                    _interceptorLogger.info("URL: " + url);
+                    _interceptorLogger.info("URL: " + decodeURI(url));
                 }
 
                 if (configuration.printRequestError() && error) {
