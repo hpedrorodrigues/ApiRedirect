@@ -13,6 +13,10 @@ function InterceptorLogger(configuration) {
 
     var self = this;
 
+    self.log = function () {
+        logger.log.apply(logger.log, arguments);
+    };
+
     self.success = function () {
         if (configuration.colors()) {
             logger.success.apply(logger.success, arguments);
@@ -123,6 +127,7 @@ function Interceptor(app, express, configuration) {
                         _interceptorLogger.error('(', response.statusCode, ')');
                     }
 
+                    _interceptorLogger.log('Request');
                     _interceptorLogger.info(url);
                 }
 
@@ -131,6 +136,7 @@ function Interceptor(app, express, configuration) {
                 }
 
                 if (configuration.printResponse() && body) {
+                    _interceptorLogger.log('Response');
                     _interceptorLogger.info(body);
                 }
             });
