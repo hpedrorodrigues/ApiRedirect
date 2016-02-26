@@ -35,6 +35,10 @@
         {
           "field": "targetUrl",
           "value": "http://localhost:3000/index"
+        },
+        {
+          "field": "test.test",
+          "value": 18
         }
       ]
     }
