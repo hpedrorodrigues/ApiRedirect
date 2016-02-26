@@ -1,6 +1,6 @@
 'use strict';
 
-var properties = require('../assets/properties.json');
+var properties = require('../configuration/configuration.json');
 
 /**
  * Objeto que contém as informações padrão das propriedades.
@@ -68,11 +68,13 @@ function Configuration() {
     };
 
     self.headers = function () {
-        return _properties.headers || DEFAULT.HEADERS;
+        var request = _properties.request || {};
+        return request.headers || DEFAULT.HEADERS;
     };
 
     self.timeout = function () {
-        return _properties.timeout || DEFAULT.TIMEOUT;
+        var request = _properties.request || {};
+        return request.timeout || DEFAULT.TIMEOUT;
     };
 
     self.rootFolder = function () {

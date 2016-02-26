@@ -6,8 +6,9 @@ A improvement from [NodeApiRedirect](https://github.com/mozartdiniz/NodeAPIRedir
 
 ## How to use
 
-Just read `assets/properties.sample.json`, understand and create your
-own `assets/properties.json`.
+Just read `configuration/configuration.sample.json` and
+`configuration/configuration.sample2.json`, understand and create your
+own `configuration/configuration.json`.
 
 If you using for client side development, needed a url to your
 `index.html` file, because all requests at root path are redirected to
