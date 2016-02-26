@@ -28,7 +28,7 @@
       }
     ],
     "headers": {
-      "Authorization": "Basic dsOhIHNlIGZ1ZGVyIHNldSBvdMOhcmlvIHBhdSBubyBjw7o="
+      "Authorization": "Basic TsOjbyBow6EgbmFkYSBwb3IgYXF1aSA7KQ=="
     },
     "override_responses": {
       "/login": [
