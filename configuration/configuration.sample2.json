@@ -1,5 +1,5 @@
 {
-  "host": "https://api_2.test.com",
+  "host": "https://api_3.com",
   "port": 4000,
   "root_folder": "/path/to/project",
   "bind": [
@@ -21,7 +21,7 @@
   "override_responses": {
     "/login": [
       {
-        "field": "targetUrl",
+        "field": "test.test.url",
         "value": "http://localhost:3000/index"
       },
       {
@@ -31,7 +31,7 @@
     ]
   },
   "log": {
-    "colors": true,
+    "colors": false,
     "print_response": false,
     "print_request_url": true,
     "print_request_error": false

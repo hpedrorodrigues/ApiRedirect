@@ -1,7 +1,7 @@
 {
   "default": "api_1",
   "api_1": {
-    "host": "https://facebook.com",
+    "host": "https://api_1.com",
     "port": 3000,
     "root_folder": "/path/to/project",
     "bind": [
