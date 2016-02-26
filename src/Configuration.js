@@ -1,6 +1,16 @@
 'use strict';
 
-var properties = require('../configuration/configuration.json');
+var properties = require('../configuration/configuration.json')
+    , commandLineArgs = require('command-line-args');
+
+/**
+ * Cli Options
+ */
+var cli = commandLineArgs([
+  { name: 'api', alias: 'a', type: String },
+  { name: 'host', alias: 'h', type: String },
+  { name: 'port', alias: 'p', type: Number }
+]).parse();
 
 /**
  * Objeto que contém as informações padrão das propriedades.
@@ -56,15 +66,15 @@ ConfigurationValidator.prototype.isValidBindObject = function (bind) {
 function Configuration() {
 
     var self = this,
-        _properties = properties[properties.default] || properties,
+        _properties = properties[cli.api] || properties[properties.default] || properties,
         _validator = new ConfigurationValidator();
 
     self.host = function () {
-        return process.argv[2] || _properties.host;
+        return cli.host || _properties.host;
     };
 
     self.port = function () {
-        return _properties.port || DEFAULT.PORT;
+        return cli.port || _properties.port || DEFAULT.PORT;
     };
 
     self.headers = function () {
