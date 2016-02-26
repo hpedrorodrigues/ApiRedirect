@@ -117,6 +117,16 @@ function Interceptor(app, express, configuration) {
             var requestStartTime = new Date();
 
             var _request = _baseRequest(url, {timeout: configuration.timeout()}, function (error, response, body) {
+                var jsonBody = {}
+                    , hasError = false;
+
+                try {
+                    jsonBody = JSON.parse(body);
+                } catch (e) {
+                    hasError = true;
+                    jsonBody = JSON.parse(JSON.stringify({'error': body}));
+                }
+
                 if (configuration.printRequestInfo()) {
                     _interceptorLogger.info('\n', '------------------------------------');
 
@@ -138,9 +148,13 @@ function Interceptor(app, express, configuration) {
                     _interceptorLogger.error(error);
                 }
 
-                if (configuration.printResponse() && body) {
+                if (configuration.printResponse() && jsonBody) {
                     _interceptorLogger.log('Response');
-                    _interceptorLogger.info(JSON.stringify(JSON.parse(body), null, 4));
+                    if (hasError) {
+                        _interceptorLogger.error(JSON.stringify(jsonBody, null, 4));
+                    } else {
+                        _interceptorLogger.info(JSON.stringify(jsonBody, null, 4));
+                    }
                 }
             });
 

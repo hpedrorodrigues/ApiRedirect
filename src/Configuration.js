@@ -37,8 +37,8 @@ var DEFAULT = {
     BIND_OBJECTS: [],
     HEADERS: {},
     PRINT_RESPONSE: false,
-    PRINT_REQUEST_INFO: true,
-    PRINT_REQUEST_ERROR: true,
+    PRINT_REQUEST_INFO: false,
+    PRINT_REQUEST_ERROR: false,
     COLORS: false
 };
 
