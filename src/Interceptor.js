@@ -4,31 +4,51 @@ var request = require('request')
     , logger = require('./Logger');
 
 /**
+ * Responsável por exibir os logs referentes as interceptações feitas.
+ *
+ * @param configuration
+ * @constructor
+ */
+function InterceptorLogger(configuration) {
+
+    var self = this;
+
+    self.success = function () {
+        if (configuration.colors()) {
+            logger.success.apply(logger.success, arguments);
+        } else {
+            logger.log.apply(logger.log, arguments);
+        }
+    };
+
+    self.info = function () {
+        if (configuration.colors()) {
+            logger.info.apply(logger.info, arguments);
+        } else {
+            logger.log.apply(logger.log, arguments);
+        }
+    };
+
+    self.error = function () {
+        if (configuration.colors()) {
+            logger.error.apply(logger.error, arguments);
+        } else {
+            logger.log.apply(logger.log, arguments);
+        }
+    };
+}
+
+/**
  * Responsável por todos os tratamentos referentes as rotas.
  *
  * @constructor
  */
-function Router(app, express, configuration) {
+function Interceptor(app, express, configuration) {
 
-    var self = this,
-        _headers = configuration.headers(),
-        _baseRequest = _headers ? request.defaults({headers: _headers, jar: true}) : request;
-
-    var _logInfo = function () {
-        if (configuration.colors()) {
-            logger.info.apply(logger.info, arguments);
-        } else {
-            logger.log.apply(logger.info, arguments);
-        }
-    };
-
-    var _logError = function () {
-        if (configuration.colors()) {
-            logger.error.apply(logger.error, arguments);
-        } else {
-            logger.log.apply(logger.info, arguments);
-        }
-    };
+    var self = this
+        , _interceptorLogger = new InterceptorLogger(configuration)
+        , _headers = configuration.headers()
+        , _baseRequest = _headers ? request.defaults({headers: _headers, jar: true}) : request;
 
     var _bindObjects = function () {
         configuration.bindObjects().forEach(function (bind) {
@@ -91,18 +111,27 @@ function Router(app, express, configuration) {
 
             var url = configuration.host() + req.url;
 
-            if (configuration.printRequestUrl()) {
-                _logInfo('\n', '------------------------------------');
-                _logInfo('\n', url);
-            }
-
             var _request = _baseRequest(url, {timeout: configuration.timeout()}, function (error, response, body) {
+                if (configuration.printRequestUrl()) {
+                    _interceptorLogger.info('\n', '------------------------------------');
+
+                    var statusCode = response.statusCode;
+
+                    if (statusCode < 400) {
+                        _interceptorLogger.success('(', response.statusCode, ')');
+                    } else {
+                        _interceptorLogger.error('(', response.statusCode, ')');
+                    }
+
+                    _interceptorLogger.info(url);
+                }
+
                 if (configuration.printRequestError() && error) {
-                    _logError(error);
+                    _interceptorLogger.error(error);
                 }
 
                 if (configuration.printResponse() && body) {
-                    _logInfo(body);
+                    _interceptorLogger.info(body);
                 }
             });
 
@@ -112,11 +141,11 @@ function Router(app, express, configuration) {
         });
     };
 
-    self.router = function () {
+    self.intercept = function () {
         _bindObjects();
         _bindOverrideResponses();
         _makeRequests();
     };
 }
 
-module.exports = Router;
+module.exports = Interceptor;

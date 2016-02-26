@@ -2,11 +2,12 @@
 
 var configuration = require('./src/Configuration')
     , express = require('express')
-    , Router = require('./src/Router')
+    , Interceptor = require('./src/Interceptor')
     , logger = require('./src/Logger')
-    , app = express();
+    , app = express()
+    , interceptor = new Interceptor(app, express, configuration);
 
-new Router(app, express, configuration).router();
+interceptor.intercept();
 
 app.listen(configuration.port());
 

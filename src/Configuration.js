@@ -4,12 +4,24 @@ var properties = require('../configuration/configuration.json')
     , commandLineArgs = require('command-line-args');
 
 /**
- * Cli Options
+ * CLI Options
  */
 var cli = commandLineArgs([
-  { name: 'api', alias: 'a', type: String },
-  { name: 'host', alias: 'h', type: String },
-  { name: 'port', alias: 'p', type: Number }
+
+    {
+        name: 'api',
+        alias: 'a',
+        type: String
+    }, {
+        name: 'host',
+        alias: 'h',
+        type: String
+    }, {
+        name: 'port',
+        alias: 'p',
+        type: Number
+    }
+
 ]).parse();
 
 /**
@@ -69,9 +81,10 @@ function Configuration() {
         _properties = properties[cli.api] || properties[properties.default] || properties,
         _validator = new ConfigurationValidator();
 
-    if(!_properties.host){
+    if (!_properties.host) {
         var api = cli.api || properties.default;
-        _properties = require('../configuration/configuration.' + api + '.json');
+        properties = require('../configuration/configuration.' + api + '.json');
+        _properties = properties[cli.api] || properties[properties.default] || properties;
     }
 
     self.host = function () {

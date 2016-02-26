@@ -19,12 +19,16 @@ function Logger() {
         return message;
     };
 
+    self.success = function () {
+        console.log(colors.green(_formatMessage(arguments)));
+    };
+
     self.error = function () {
         console.log(colors.red(_formatMessage(arguments)));
     };
 
     self.info = function () {
-        console.log(colors.blue(_formatMessage(arguments)));
+        console.log(colors.cyan(_formatMessage(arguments)));
     };
 
     self.warn = function () {
