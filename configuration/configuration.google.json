@@ -1,0 +1,27 @@
+{
+  "host": "https://google.com",
+  "port": 3000,
+  "root_folder": "/path/to/project",
+  "bind": [
+    {
+      "uri": "/index",
+      "path": "/index.html"
+    },
+    {
+      "uri": "/resources/",
+      "path": "/resources/"
+    }
+  ],
+  "request": {
+    "timeout": 15000,
+    "headers": {
+      "Authorization": "Basic TsOjbyBow6EgbmFkYSBwb3IgYXF1aSA7KQ=="
+    }
+  },
+  "log": {
+    "colors": true,
+    "print_response": false,
+    "print_request_url": true,
+    "print_request_error": false
+  }
+}

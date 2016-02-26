@@ -69,6 +69,11 @@ function Configuration() {
         _properties = properties[cli.api] || properties[properties.default] || properties,
         _validator = new ConfigurationValidator();
 
+    if(!_properties.host){
+        var api = cli.api || properties.default;
+        _properties = require('../configuration/configuration.' + api + '.json');
+    }
+
     self.host = function () {
         return cli.host || _properties.host;
     };
