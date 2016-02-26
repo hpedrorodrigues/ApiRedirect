@@ -8,6 +8,10 @@ A improvement from [NodeApiRedirect](https://github.com/mozartdiniz/NodeAPIRedir
 
 Just read `properties.sample.json` and understand.
 
+If you using for client side development, needed a url to your
+`index.html` file, because all requests at root path are redirected to
+your api.
+
 ## How to run
 
 ```bash

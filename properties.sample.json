@@ -28,6 +28,9 @@
         "path": "/resources/fonts/"
       }
     ],
+    "headers": {
+      "Authorization": "Basic dsOhIHNlIGZ1ZGVyIHNldSBvdMOhcmlvIHBhdSBubyBjw7o="
+    },
     "override_responses": [
       {
         "uri": "/login",

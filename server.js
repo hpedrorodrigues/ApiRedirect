@@ -1,13 +1,14 @@
 'use strict';
 
-var properties = require('./properties.json');
-var express = require('express');
-var request = require('request');
-var app = express();
-
-var _properties = properties[properties.default];
-
-var apiHost = process.argv[2] || _properties.api.host;
+var properties = require('./properties.json')
+    , express = require('express')
+    , request = require('request')
+    , app = express()
+    , _properties = properties[properties.default] || properties
+    , host = process.argv[2] || _properties.host
+    , port = _properties.port
+    , headers = _properties.headers
+    , overrideResponses = _properties.override_responses;
 
 app.use(express.static('files'));
 
@@ -22,7 +23,6 @@ _properties.bind.forEach(function (bindObject) {
     }
 });
 
-var overrideResponses = _properties.override_responses;
 if (overrideResponses && overrideResponses.length) {
 
     overrideResponses.forEach(function (overrideResponse) {
@@ -31,7 +31,7 @@ if (overrideResponses && overrideResponses.length) {
 
             app.use(overrideResponse.uri, function (req, res) {
 
-                var url = apiHost + overrideResponse.uri;
+                var url = host + overrideResponse.uri;
 
                 req.pipe(request(url, function (err, response, body) {
 
@@ -73,14 +73,21 @@ if (overrideResponses && overrideResponses.length) {
 }
 
 app.use('/', function (req, response) {
-    var _request = request(apiHost + req.url);
+
+    if (headers) {
+        for (var headerName in headers) {
+            req.headers[headerName] = headers[headerName];
+        }
+    }
+
     req
-        .pipe(_request)
+        .pipe(request(host + req.url))
         .pipe(response);
 });
 
-app.listen(_properties.api.port);
+app.listen(port);
 
-console.info('Server started listen:', _properties.api.port);
-console.info('Api Host:', apiHost);
+console.info('\n', '-----------------------------------------------');
+console.info('Server started listen:', port);
+console.info('Api Host:', host);
 console.info('Root folder:', _properties.root_folder);
