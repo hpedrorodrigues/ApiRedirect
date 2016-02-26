@@ -114,6 +114,7 @@ function Interceptor(app, express, configuration) {
         app.use('/', function (req, response) {
 
             var url = configuration.host() + req.url;
+            var requestStartTime = new Date();
 
             var _request = _baseRequest(url, {timeout: configuration.timeout()}, function (error, response, body) {
                 if (configuration.printRequestUrl()) {
@@ -126,6 +127,8 @@ function Interceptor(app, express, configuration) {
                     } else {
                         _interceptorLogger.error('(', response.statusCode, ')');
                     }
+
+                    _interceptorLogger.log('Time:', new Date() - requestStartTime, 'ms');
 
                     _interceptorLogger.log('Request');
                     _interceptorLogger.info(url);
