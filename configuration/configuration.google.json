@@ -21,7 +21,7 @@
   "log": {
     "colors": true,
     "print_response": false,
-    "print_request_url": true,
+    "print_request_info": true,
     "print_request_error": false
   }
 }

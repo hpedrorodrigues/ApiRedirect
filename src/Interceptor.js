@@ -117,7 +117,7 @@ function Interceptor(app, express, configuration) {
             var requestStartTime = new Date();
 
             var _request = _baseRequest(url, {timeout: configuration.timeout()}, function (error, response, body) {
-                if (configuration.printRequestUrl()) {
+                if (configuration.printRequestInfo()) {
                     _interceptorLogger.info('\n', '------------------------------------');
 
                     var statusCode = response.statusCode

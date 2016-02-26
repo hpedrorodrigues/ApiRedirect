@@ -37,7 +37,7 @@ var DEFAULT = {
     BIND_OBJECTS: [],
     HEADERS: {},
     PRINT_RESPONSE: false,
-    PRINT_REQUEST_URL: true,
+    PRINT_REQUEST_INFO: true,
     PRINT_REQUEST_ERROR: true,
     COLORS: false
 };
@@ -141,9 +141,9 @@ function Configuration() {
         return !!(log.print_response || DEFAULT.PRINT_RESPONSE);
     };
 
-    self.printRequestUrl = function () {
+    self.printRequestInfo = function () {
         var log = _properties.log || {};
-        return !!(log.print_request_url || DEFAULT.PRINT_REQUEST_URL);
+        return !!(log.print_request_info || DEFAULT.PRINT_REQUEST_INFO);
     };
 
     self.printRequestError = function () {
