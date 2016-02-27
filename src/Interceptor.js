@@ -128,7 +128,7 @@ function Interceptor(app, express, configuration) {
                 }
 
                 if (configuration.printRequestInfo()) {
-                    _interceptorLogger.info('\n', '------------------------------------');
+                    _interceptorLogger.info('\n-----------------------------------------------');
 
                     var statusCode = response.statusCode
                         , requestEndTime = (new Date() - requestStartTime) + 'ms'
@@ -138,6 +138,7 @@ function Interceptor(app, express, configuration) {
                     if (statusCode < 400) {
                         _interceptorLogger.success(header);
                     } else {
+                        hasError = true;
                         _interceptorLogger.error(header);
                     }
 
@@ -150,11 +151,9 @@ function Interceptor(app, express, configuration) {
 
                 if (configuration.printResponse() && jsonBody) {
                     _interceptorLogger.log('Response');
-                    if (hasError) {
-                        _interceptorLogger.error(JSON.stringify(jsonBody, null, 4));
-                    } else {
-                        _interceptorLogger.info(JSON.stringify(jsonBody, null, 4));
-                    }
+
+                    var loggerFunction = hasError ? _interceptorLogger.error : _interceptorLogger.info;
+                    loggerFunction.call(loggerFunction, JSON.stringify(jsonBody, null, 4));
                 }
             });
 
