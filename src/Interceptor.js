@@ -56,7 +56,11 @@ function Interceptor(app, express, configuration) {
 
     var _bindObjects = function () {
         configuration.bindObjects().forEach(function (bind) {
-            app.use(bind.uri, express.static(configuration.rootFolder() + bind.path));
+            if (bind.folder) {
+                app.use(express.static(bind.folder));
+            } else {
+                app.use(bind.uri, express.static(configuration.rootFolder() + bind.path));
+            }
         });
     };
 

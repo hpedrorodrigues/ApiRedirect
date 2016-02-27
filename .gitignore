@@ -2,5 +2,3 @@
 .DS_STORE
 node_modules
 *.log
-configuration/configuration.json
-configuration/configuration.greenmile.json

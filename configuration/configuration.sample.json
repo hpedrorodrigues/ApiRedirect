@@ -10,6 +10,9 @@
     {
       "uri": "/resources/",
       "path": "/resources/"
+    },
+    {
+      "folder": "public"
     }
   ],
   "request": {

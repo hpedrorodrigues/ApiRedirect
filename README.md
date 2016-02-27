@@ -133,12 +133,18 @@ Root folder to your project.
 
 > required
 
-Object to bind a **uri** in a **path**.
+Object to bind a **uri** in a **path** or **folder**.
 
 He is used in **express** configuration like this:
 
 ```javascript
 app.use(uri, express.static(root_folder + path));
+```
+
+or
+
+```javascript
+app.use(express.static(folder));
 ```
 
 **Attention**: If you using for client side development, needed a url to your
