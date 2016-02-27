@@ -227,6 +227,8 @@ For instance:
 
 ## How to run
 
+First, type `npm install` to install dependencies.
+
 In root folder of this project, type:
 ```bash
 node main.js
