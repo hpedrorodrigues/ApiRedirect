@@ -249,7 +249,7 @@ node main.js --host http://anotherdomain.test.com --port 3000
 
 Questions, bug reports, improve documentation, and feature request please
 search through existing [issue](https://github.com/hpedrorodrigues/ApiRedirect/issues)
-and if you don't find and open a one new 
+or open a one new 
 [issue](https://github.com/hpedrorodrigues/ApiRedirect/issues/new).
 If you need support send me an [email](mailto:hs.pedro.rodrigues@gmail.com).
 
