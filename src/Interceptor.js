@@ -123,8 +123,8 @@ function Interceptor(app, express, configuration) {
                 try {
                     jsonBody = JSON.parse(body);
                 } catch (e) {
-                    hasError = true;
-                    jsonBody = JSON.parse(JSON.stringify({'error': body}));
+                    hasError = !!(body);
+                    jsonBody = JSON.parse(JSON.stringify(body ? {'error': body} : ['Empty body']));
                 }
 
                 if (configuration.printRequestInfo()) {
