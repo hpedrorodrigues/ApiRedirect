@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Api Redirect : A beautiful api redirect for all web projects :)">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Api Redirect</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/hpedrorodrigues/ApiRedirect">View on GitHub</a>
+
+          <h1 id="project_title">Api Redirect</h1>
+          <h2 id="project_tagline">A beautiful api redirect for all web projects :)</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/hpedrorodrigues/ApiRedirect/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/hpedrorodrigues/ApiRedirect/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="apiredirect" class="anchor" href="#apiredirect" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>APIRedirect</h1>
+
+<p>A beautiful api redirect for all web projects.</p>
+
+<p>A improvement from
+<a href="https://github.com/mozartdiniz/NodeAPIRedirect">NodeApiRedirect</a>.</p>
+
+<h2>
+<a id="summary" class="anchor" href="#summary" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Summary</h2>
+
+<ul>
+<li>
+<a href="#configuration">Configuration</a>
+
+<ul>
+<li><a href="#files">Files</a></li>
+<li><a href="#properties">Properties</a></li>
+</ul>
+</li>
+<li><a href="#how-to-run">How to run</a></li>
+<li><a href="#issues">Issues</a></li>
+<li><a href="#thanks">Thanks</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#more">More</a></li>
+</ul>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>Before, see the <code>configuration.sample.json</code> file located at <em>configuration</em> 
+folder.</p>
+
+<h3>
+<a id="files" class="anchor" href="#files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Files</h3>
+
+<p><strong>API Redirect</strong> always read <code>configuration.json</code> file located
+at <em>configuration</em> folder.</p>
+
+<h4>
+<a id="multiple-files" class="anchor" href="#multiple-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Multiple files</h4>
+
+<p>You can have several others <em>configuration</em> files, but remember to
+set <strong>default</strong> property in <code>configuration.json</code>, like this:</p>
+
+<p><strong>configuration.google.json</strong></p>
+
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>host<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>https://google.com<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>port<span class="pl-pds">"</span></span>: <span class="pl-c1">3000</span>,
+  <span class="pl-s"><span class="pl-pds">"</span>root_folder<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/path/to/project<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>bind<span class="pl-pds">"</span></span>: [
+    {
+      <span class="pl-s"><span class="pl-pds">"</span>uri<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/index<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/index.html<span class="pl-pds">"</span></span>
+    },
+    {
+      <span class="pl-s"><span class="pl-pds">"</span>uri<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/resources/<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/resources/<span class="pl-pds">"</span></span>
+    }
+  ]
+}</pre></div>
+
+<p><strong>configuration.json</strong></p>
+
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>default<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>google<span class="pl-pds">"</span></span>
+}</pre></div>
+
+<p>In this case, <strong>default</strong> property is a alias to your API
+(<code>configuration. + api + .json</code>).</p>
+
+<h4>
+<a id="only-one-file" class="anchor" href="#only-one-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Only one file</h4>
+
+<p>You can also have several APIs in only one file, like this:</p>
+
+<p><strong>configuration.google.json</strong></p>
+
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>default<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>api_1<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>api_1<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>host<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>https://api_1.com<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>port<span class="pl-pds">"</span></span>: <span class="pl-c1">3000</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>root_folder<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/path/to/project<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>bind<span class="pl-pds">"</span></span>: [
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>uri<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/index<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/index.html<span class="pl-pds">"</span></span>
+      },
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>uri<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/resources/<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/resources/<span class="pl-pds">"</span></span>
+      }
+    ]
+  },
+  <span class="pl-s"><span class="pl-pds">"</span>api_2<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>host<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>https://api_2.test.com<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>port<span class="pl-pds">"</span></span>: <span class="pl-c1">4000</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>root_folder<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/path/to/project<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>bind<span class="pl-pds">"</span></span>: [
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>uri<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/index<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/index.html<span class="pl-pds">"</span></span>
+      },
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>uri<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/resources/<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/resources/<span class="pl-pds">"</span></span>
+      }
+    ]
+  }
+}</pre></div>
+
+<p>In this case, <strong>default</strong> property is a key to your API object (<code>configurationFileContent[api]</code>).</p>
+
+<h3>
+<a id="properties" class="anchor" href="#properties" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Properties</h3>
+
+<ul>
+<li><strong>default</strong></li>
+</ul>
+
+<blockquote>
+<p>required</p>
+</blockquote>
+
+<p>A alias to your API.</p>
+
+<ul>
+<li><strong>host</strong></li>
+</ul>
+
+<blockquote>
+<p>required</p>
+</blockquote>
+
+<p>Your API host.</p>
+
+<ul>
+<li><strong>port</strong></li>
+</ul>
+
+<blockquote>
+<p>required</p>
+</blockquote>
+
+<p>Server listening at this property.</p>
+
+<ul>
+<li><strong>root_folder</strong></li>
+</ul>
+
+<blockquote>
+<p>required</p>
+</blockquote>
+
+<p>Root folder to your project.</p>
+
+<ul>
+<li><strong>bind</strong></li>
+</ul>
+
+<blockquote>
+<p>required</p>
+</blockquote>
+
+<p>Object to bind a <strong>uri</strong> in a <strong>path</strong> or <strong>folder</strong>.</p>
+
+<p>He is used in <strong>express</strong> configuration like this:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">app</span>.<span class="pl-en">use</span>(uri, <span class="pl-smi">express</span>.<span class="pl-en">static</span>(root_folder <span class="pl-k">+</span> path));</pre></div>
+
+<p>or</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">app</span>.<span class="pl-en">use</span>(<span class="pl-smi">express</span>.<span class="pl-en">static</span>(folder));</pre></div>
+
+<p><strong>Attention</strong>: If you using for client side development, needed a url to your
+<code>index.html</code> file, because all requests at root path are redirected to
+your API.</p>
+
+<p>For instance:</p>
+
+<div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>uri<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/index<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/index.html<span class="pl-pds">"</span></span>
+}</pre></div>
+
+<p>Now, just open your API host with <code>/index</code>.</p>
+
+<blockquote>
+<p>Example: http://localhost:3000/index</p>
+</blockquote>
+
+<ul>
+<li><strong>request</strong></li>
+</ul>
+
+<blockquote>
+<p>optional</p>
+</blockquote>
+
+<p>This object is used to set properties for all requests.</p>
+
+<ul>
+<li>
+<strong>timeout</strong> - Set timeout for all requests, value will be in milliseconds.</li>
+<li>
+<strong>headers</strong> - Any properties in this object will be added in all requests header.</li>
+</ul>
+
+<p>For instance:</p>
+
+<div class="highlight highlight-source-json"><pre><span class="pl-s"><span class="pl-pds">"</span>request<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>timeout<span class="pl-pds">"</span></span>: <span class="pl-c1">60000</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>headers<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>Authorization<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Basic VGhhbmsgeW91IGZvciBkZWNvZGUgdGhpcyBzdHJpbmcuIDop<span class="pl-pds">"</span></span>
+    }
+}</pre></div>
+
+<ul>
+<li><strong>override_responses</strong></li>
+</ul>
+
+<blockquote>
+<p>optional</p>
+</blockquote>
+
+<p>This object is used to override responses. Very good to tests.</p>
+
+<p>For instance:</p>
+
+<div class="highlight highlight-source-json"><pre><span class="pl-s"><span class="pl-pds">"</span>override_responses<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>/login<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>field<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>targetUrl<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://localhost:3000/index<span class="pl-pds">"</span></span>
+        }
+    ]
+}</pre></div>
+
+<p>In this case, the field <em>targetUrl</em> of response in request <code>/login</code>
+will be change to <em>http://localhost:3000/index</em>.</p>
+
+<blockquote>
+<p><strong>value</strong> can to accept chain objects like 'myObject.myProperty.test'.</p>
+</blockquote>
+
+<ul>
+<li><strong>log</strong></li>
+</ul>
+
+<blockquote>
+<p>optional</p>
+</blockquote>
+
+<p>This object is used to set log properties.</p>
+
+<ul>
+<li>
+<strong>colors</strong> - Show colors.</li>
+<li>
+<strong>show_response</strong> - Show all responses.</li>
+<li>
+<strong>show_request_info</strong> - Show requests information as status code, time of response, url...</li>
+<li>
+<strong>show_request_error</strong> - Show request errors.</li>
+</ul>
+
+<p>For instance:</p>
+
+<div class="highlight highlight-source-json"><pre><span class="pl-s"><span class="pl-pds">"</span>log<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>colors<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>show_response<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>show_request_info<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>show_request_error<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>
+}</pre></div>
+
+<h2>
+<a id="how-to-run" class="anchor" href="#how-to-run" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to run</h2>
+
+<p>First, type <code>npm install</code> to install dependencies.</p>
+
+<p>In root folder of this project, type:</p>
+
+<div class="highlight highlight-source-shell"><pre>node main.js</pre></div>
+
+<p>But you can pass some arguments also:</p>
+
+<ul>
+<li><strong>-a, --api</strong></li>
+<li><strong>-h, --host</strong></li>
+<li><strong>-p, --port</strong></li>
+</ul>
+
+<p>For instance:</p>
+
+<div class="highlight highlight-source-shell"><pre>node main.js --host http://anotherdomain.<span class="pl-c1">test</span>.com --port 3000</pre></div>
+
+<h2>
+<a id="issues" class="anchor" href="#issues" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Issues</h2>
+
+<p>Questions, bug reports, improve documentation, and feature request please
+search through existing <a href="https://github.com/hpedrorodrigues/ApiRedirect/issues">issue</a>
+or open a one new 
+<a href="https://github.com/hpedrorodrigues/ApiRedirect/issues/new">issue</a>.
+If you need support send me an <a href="mailto:hs.pedro.rodrigues@gmail.com">email</a>.</p>
+
+<h2>
+<a id="thanks" class="anchor" href="#thanks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Thanks</h2>
+
+<p><a href="https://github.com/augustomna2010">Augusto Monteiro</a> for <strong>multiple 
+configuration</strong> files and <strong>CLI</strong> options.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>API Redirect is released under the MIT license. See <a href="./LICENSE">LICENSE</a> for more details.</p>
+
+<h2>
+<a id="more" class="anchor" href="#more" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>More</h2>
+
+<p>API Redirect is a work in progress, feel free to improve it.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Api Redirect maintained by <a href="https://github.com/hpedrorodrigues">hpedrorodrigues</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
