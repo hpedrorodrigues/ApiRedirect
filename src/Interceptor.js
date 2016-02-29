@@ -1,46 +1,7 @@
 'use strict';
 
 var request = require('request')
-    , logger = require('./Logger');
-
-/**
- * Responsável por exibir os logs referentes as interceptações feitas.
- *
- * @param configuration
- * @constructor
- */
-function InterceptorLogger(configuration) {
-
-    var self = this;
-
-    self.log = function () {
-        logger.log.apply(logger.log, arguments);
-    };
-
-    self.success = function () {
-        if (configuration.colors()) {
-            logger.success.apply(logger.success, arguments);
-        } else {
-            logger.log.apply(logger.log, arguments);
-        }
-    };
-
-    self.info = function () {
-        if (configuration.colors()) {
-            logger.info.apply(logger.info, arguments);
-        } else {
-            logger.log.apply(logger.log, arguments);
-        }
-    };
-
-    self.error = function () {
-        if (configuration.colors()) {
-            logger.error.apply(logger.error, arguments);
-        } else {
-            logger.log.apply(logger.log, arguments);
-        }
-    };
-}
+    , interceptorLogger = require('./InterceptorLogger');
 
 /**
  * Responsável por todos os tratamentos referentes as rotas.
@@ -50,7 +11,6 @@ function InterceptorLogger(configuration) {
 function Interceptor(app, express, configuration) {
 
     var self = this
-        , _interceptorLogger = new InterceptorLogger(configuration)
         , _headers = configuration.headers()
         , _baseRequest = _headers ? request.defaults({headers: _headers, jar: true}) : request;
 
@@ -131,8 +91,8 @@ function Interceptor(app, express, configuration) {
                     jsonBody = JSON.parse(JSON.stringify(body ? {'error': body} : ['Empty body']));
                 }
 
-                if (configuration.printRequestInfo()) {
-                    _interceptorLogger.info('\n-----------------------------------------------');
+                if (configuration.showRequestInfo()) {
+                    interceptorLogger.info('\n-----------------------------------------------');
 
                     var statusCode = response.statusCode
                         , requestEndTime = (new Date() - requestStartTime) + 'ms'
@@ -140,23 +100,23 @@ function Interceptor(app, express, configuration) {
 
 
                     if (statusCode < 400) {
-                        _interceptorLogger.success(header);
+                        interceptorLogger.success(header);
                     } else {
                         hasError = true;
-                        _interceptorLogger.error(header);
+                        interceptorLogger.error(header);
                     }
 
-                    _interceptorLogger.info("URL: " + decodeURI(url));
+                    interceptorLogger.info("URL: " + decodeURI(url));
                 }
 
-                if (configuration.printRequestError() && error) {
-                    _interceptorLogger.error(error);
+                if (configuration.showRequestError() && error) {
+                    interceptorLogger.error(error);
                 }
 
-                if (configuration.printResponse() && jsonBody) {
-                    _interceptorLogger.log('Response');
+                if (configuration.showResponse() && jsonBody) {
+                    interceptorLogger.log('Response');
 
-                    var loggerFunction = hasError ? _interceptorLogger.error : _interceptorLogger.info;
+                    var loggerFunction = hasError ? interceptorLogger.error : interceptorLogger.info;
                     loggerFunction.call(loggerFunction, JSON.stringify(jsonBody, null, 4));
                 }
             });

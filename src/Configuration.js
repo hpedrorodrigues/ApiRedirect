@@ -1,74 +1,9 @@
 'use strict';
 
-var properties = require('../configuration/configuration.json')
-    , commandLineArgs = require('command-line-args');
-
-/**
- * CLI Options
- */
-var cli = commandLineArgs([
-
-    {
-        name: 'api',
-        alias: 'a',
-        type: String
-    }, {
-        name: 'host',
-        alias: 'h',
-        type: String
-    }, {
-        name: 'port',
-        alias: 'p',
-        type: Number
-    }
-
-]).parse();
-
-/**
- * Objeto que contém as informações padrão das propriedades.
- *
- * @type {object}
- */
-var DEFAULT = {
-    PORT: 3000,
-    TIMEOUT: 30000,
-    ROOT_FOLDER: __dirname,
-    OVERRIDE_RESPONSES: {},
-    BIND_OBJECTS: [],
-    HEADERS: {},
-    PRINT_RESPONSE: false,
-    PRINT_REQUEST_INFO: false,
-    PRINT_REQUEST_ERROR: false,
-    COLORS: false
-};
-
-/**
- * Responsável por validar se as configurações fornecidas no arquivo {@link properties.json} são validas.
- *
- * @constructor
- */
-function ConfigurationValidator() {
-}
-
-/**
- * Verifica se o objeto de sobrescrita de respostas é válido.
- *
- * @param override
- * @returns {boolean}
- */
-ConfigurationValidator.prototype.isValidOverrideResponse = function (override) {
-    return !!(override && override.field && override.value);
-};
-
-/**
- * Verifica se o objeto a ser feito o bind dos paths dos arquivos estáticos é válido.
- *
- * @param bind
- * @returns {boolean}
- */
-ConfigurationValidator.prototype.isValidBindObject = function (bind) {
-    return !!(bind && ((bind.uri && bind.path) || bind.folder));
-};
+var configuration = require('../configuration/configuration.json')
+    , cli = require('./CLI')
+    , Constants = require('./Constants')
+    , configurationValidator = require('./ConfigurationValidator');
 
 /**
  * Responsável por informar os dados já validados por {@link ConfigurationValidator}.
@@ -77,84 +12,137 @@ ConfigurationValidator.prototype.isValidBindObject = function (bind) {
  */
 function Configuration() {
 
-    var self = this,
-        _properties = properties[cli.api] || properties[properties.default] || properties,
-        _validator = new ConfigurationValidator();
+    this.configuration = configuration[cli.api] || configuration[configuration.default] || configuration;
 
-    if (!_properties.host) {
-        var api = cli.api || properties.default;
-        properties = require('../configuration/configuration.' + api + '.json');
-        _properties = properties[cli.api] || properties[properties.default] || properties;
+    if (!this.configuration.host) {
+        var api = cli.api || configuration.default;
+        configuration = require('../configuration/configuration.' + api + '.json');
+        this.configuration = configuration[cli.api] || configuration[configuration.default] || configuration;
     }
+}
 
-    self.host = function () {
-        return cli.host || _properties.host;
-    };
+/**
+ * Informa o host para onde serão redirecionadas as requests.
+ *
+ * @returns {string}
+ */
+Configuration.prototype.host = function () {
+    return cli.host || this.configuration.host;
+};
 
-    self.port = function () {
-        return cli.port || _properties.port || DEFAULT.PORT;
-    };
+/**
+ * Informa a porta em que o servidor irá escutar.
+ *
+ * @returns {number}
+ */
+Configuration.prototype.port = function () {
+    return cli.port || this.configuration.port || Constants.DEFAULT_CONFIGURATIONS.PORT;
+};
 
-    self.headers = function () {
-        var request = _properties.request || {};
-        return request.headers || DEFAULT.HEADERS;
-    };
+/**
+ * Informa os headers que serão adicionados a todas requests.
+ *
+ * @returns {object}
+ */
+Configuration.prototype.headers = function () {
+    var request = this.configuration.request || {};
+    return request.headers || Constants.DEFAULT_CONFIGURATIONS.HEADERS;
+};
 
-    self.timeout = function () {
-        var request = _properties.request || {};
-        return request.timeout || DEFAULT.TIMEOUT;
-    };
+/**
+ * Informa o timeout de todas as requests.
+ *
+ * @returns {number}
+ */
+Configuration.prototype.timeout = function () {
+    var request = this.configuration.request || {};
+    return request.timeout || Constants.DEFAULT_CONFIGURATIONS.TIMEOUT;
+};
 
-    self.rootFolder = function () {
-        return _properties.root_folder || DEFAULT.ROOT_FOLDER;
-    };
+/**
+ * Informa a pasta raiz do projeto.
+ *
+ * @returns {string}
+ */
+Configuration.prototype.rootFolder = function () {
+    return this.configuration.root_folder || Constants.DEFAULT_CONFIGURATIONS.ROOT_FOLDER;
+};
 
-    self.overrideResponses = function () {
-        var overrideResponses = _properties.override_responses || DEFAULT.OVERRIDE_RESPONSES;
+/**
+ * Informa os objetos referentes as sobrescritas das respostas.
+ *
+ * @returns {object}
+ */
+Configuration.prototype.overrideResponses = function () {
+    var overrideResponses = this.configuration.override_responses || Constants.DEFAULT_CONFIGURATIONS.OVERRIDE_RESPONSES;
 
-        for (var property in overrideResponses) {
-            var overrides = overrideResponses[property];
+    for (var property in overrideResponses) {
+        var overrides = overrideResponses[property];
 
-            overrides.forEach(function (override) {
-                if (!_validator.isValidOverrideResponse(override)) {
+        overrides.forEach(function (override) {
+            if (!configurationValidator.isValidOverrideResponse(override)) {
 
-                    throw new ReferenceError("Invalid value for a override response object: " + override);
-                }
-            });
-        }
-
-        return overrideResponses;
-    };
-
-    self.bindObjects = function () {
-        return _properties.bind.map(function (bind) {
-            if (_validator.isValidBindObject(bind)) {
-                return bind;
-            } else {
-                throw new ReferenceError("Invalid value for a bind object: " + bind);
+                throw new ReferenceError("Invalid value for a override response object: " + override);
             }
         });
-    };
+    }
 
-    self.printResponse = function () {
-        var log = _properties.log || {};
-        return !!(log.print_response || DEFAULT.PRINT_RESPONSE);
-    };
+    return overrideResponses;
+};
 
-    self.printRequestInfo = function () {
-        var log = _properties.log || {};
-        return !!(log.print_request_info || DEFAULT.PRINT_REQUEST_INFO);
-    };
+/**
+ * Informa os objetos a serem bindados, uri + path ou apenas folder.
+ *
+ * @returns {Array}
+ */
+Configuration.prototype.bindObjects = function () {
+    return this.configuration.bind.map(function (bind) {
+        if (configurationValidator.isValidBindObject(bind)) {
+            return bind;
+        } else {
+            throw new ReferenceError("Invalid value for a bind object: " + bind);
+        }
+    });
+};
 
-    self.printRequestError = function () {
-        var log = _properties.log || {};
-        return !!(log.print_request_error || DEFAULT.PRINT_REQUEST_ERROR);
-    };
+/**
+ * Informa se a aplicação deve exibir as respostas de todas as requests.
+ *
+ * @returns {boolean}
+ */
+Configuration.prototype.showResponse = function () {
+    var log = this.configuration.log || {};
+    return !!(log.show_response || Constants.DEFAULT_CONFIGURATIONS.SHOW_RESPONSE);
+};
 
-    self.colors = function () {
-        var log = _properties.log || {};
-        return !!(log.colors || DEFAULT.COLORS);
-    };
-}
+/**
+ * Informa se a aplicação deve exibir informações das requests, por exemplo: tempo, código de status...
+ *
+ * @returns {boolean}
+ */
+Configuration.prototype.showRequestInfo = function () {
+    var log = this.configuration.log || {};
+    return !!(log.show_request_info || Constants.DEFAULT_CONFIGURATIONS.SHOW_REQUEST_INFO);
+};
+
+/**
+ * Informa se a aplicação deve exibir erros referentes as requests.
+ *
+ * @returns {boolean}
+ */
+Configuration.prototype.showRequestError = function () {
+    var log = this.configuration.log || {};
+    return !!(log.show_request_error || Constants.DEFAULT_CONFIGURATIONS.SHOW_REQUEST_ERROR);
+};
+
+/**
+ * Habilita cores na saída da aplicação: stdout.
+ *
+ * @returns {boolean}
+ */
+Configuration.prototype.colors = function () {
+    var log = this.configuration.log || {};
+    return !!(log.colors || Constants.DEFAULT_CONFIGURATIONS.COLORS);
+};
 
 module.exports = new Configuration();
