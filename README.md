@@ -211,17 +211,17 @@ will be change to *http://localhost:3000/index*.
 This object is used to set log properties.
 
   - **colors** - Show colors.
-  - **print_response** - Show all responses.
-  - **print_request_info** - Show requests information as status code, time of response, url...
-  - **print_request_error** - Show request errors.
+  - **show_response** - Show all responses.
+  - **show_request_info** - Show requests information as status code, time of response, url...
+  - **show_request_error** - Show request errors.
   
 For instance:
 ```json
 "log": {
     "colors": true,
-    "print_response": true,
-    "print_request_info": true,
-    "print_request_error": true
+    "show_response": true,
+    "show_request_info": true,
+    "show_request_error": true
 }
 ```
 
