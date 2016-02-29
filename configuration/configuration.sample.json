@@ -35,8 +35,8 @@
   },
   "log": {
     "colors": false,
-    "print_response": false,
-    "print_request_info": true,
-    "print_request_error": false
+    "show_response": true,
+    "show_request_info": true,
+    "show_request_error": true
   }
 }
