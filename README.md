@@ -255,7 +255,7 @@ If you need support send me an [email](mailto:hs.pedro.rodrigues@gmail.com).
 
 ## Thanks
 
-[Augusto Monteiro](https://github.com/augustomna2010) for **multiple 
+[Augusto Monteiro](https://github.com/augustnmonteiro) for **multiple 
 configuration** files and **CLI** options.
 
 ## License
