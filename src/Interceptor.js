@@ -95,6 +95,8 @@ function Interceptor(app, express, configuration) {
                     interceptorLogger.info('\n-----------------------------------------------');
 
                     if (!response) {
+                        interceptorLogger.log('(No status) ' + (new Date() - requestStartTime) + 'ms');
+                        interceptorLogger.log("URL: " + decodeURI(url));
                         interceptorLogger.error('Empty response received', jsonBody);
                         return;
                     }
