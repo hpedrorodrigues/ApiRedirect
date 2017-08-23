@@ -94,6 +94,11 @@ function Interceptor(app, express, configuration) {
                 if (configuration.showRequestInfo()) {
                     interceptorLogger.info('\n-----------------------------------------------');
 
+                    if (!response) {
+                        interceptorLogger.error('Empty response received', jsonBody);
+                        return;
+                    }
+
                     var statusCode = response.statusCode
                         , requestEndTime = (new Date() - requestStartTime) + 'ms'
                         , header = '(' + response.statusCode + ') ' + requestEndTime;

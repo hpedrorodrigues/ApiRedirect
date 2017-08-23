@@ -1,4 +1,10 @@
+# Folder
+
 .idea
-.DS_STORE
 node_modules
+
+# File
+
 *.log
+.DS_Store
+package-lock.json
